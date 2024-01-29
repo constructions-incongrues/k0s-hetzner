@@ -8,19 +8,24 @@ provider "hcloud" {
 }
 
 provider "kubernetes" {
-  config_path = module.marmite.kubeconfig_filename
+  host = module.marmite.host
+  client_certificate = module.marmite.client_cert
+  client_key = module.marmite.client_key
+  cluster_ca_certificate = module.marmite.ca_cert
 }
 
 provider "helm" {
   kubernetes {
-    config_path = module.marmite.kubeconfig_filename
+    host = module.marmite.host
+    client_certificate = module.marmite.client_cert
+    client_key = module.marmite.client_key
+    cluster_ca_certificate = module.marmite.ca_cert
   }
 }
 
 provider "kubectl" {
-  config_path = module.marmite.kubeconfig_filename
-}
-
-provider "kustomization" {
-  kubeconfig_path = module.marmite.kubeconfig_filename
+  host = module.marmite.host
+  client_certificate = module.marmite.client_cert
+  client_key = module.marmite.client_key
+  cluster_ca_certificate = module.marmite.ca_cert
 }

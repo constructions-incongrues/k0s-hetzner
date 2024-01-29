@@ -6,7 +6,7 @@ terraform {
     }
     k0sctl = {
       source = "Mirantis/k0sctl"
-      version = "0.0.2"
+      version = "0.0.3"
     }
     local = {
       source = "hashicorp/local"
