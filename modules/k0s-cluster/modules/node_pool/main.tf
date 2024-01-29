@@ -15,7 +15,6 @@ resource "hcloud_server" "node" {
   ssh_keys    = [ var.ssh_key_name ]
   user_data   = templatefile("${path.module}/../../templates/cloud-init.yaml.tpl", {
     hcloud_api_token = var.hcloud_api_token
-    network = "${var.name_prefix}-network"
   })
 
   public_net { ipv6_enabled = var.ipv6_enabled }

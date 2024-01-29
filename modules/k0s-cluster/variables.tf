@@ -17,15 +17,6 @@ variable "node_pools" {
   default = {}
 }
 
-variable "external_hostname" {
-  type = string
-}
-
-variable "name_prefix" {
-  type = string
-  default = ""
-}
-
 variable "hcloud_api_token" {
   type = string
 }

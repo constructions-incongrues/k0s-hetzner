@@ -36,35 +36,3 @@ spec:
   konnectivity:
     agentPort: 8132
     adminPort: 8133
-  extensions:
-    helm:
-      repositories:
-        - name: hcloud
-          url: https://charts.hetzner.cloud
-        - name: traefik
-          url: https://traefik.github.io/charts
-      charts:
-        - name: hcloud-csi
-          chartname: hcloud/hcloud-csi
-          version: "2.6.0"
-          namespace: kube-system
-          values: |
-            node:
-              kubeletDir: /var/lib/k0s/kubelet
-              hostNetwork: true
-        - name: hcloud-cloud-controller-manager
-          chartname: hcloud/hcloud-cloud-controller-manager
-          version: "1.19.0"
-          namespace: kube-system
-          values: |
-            networking:
-              enabled: true
-        - name: traefik
-          chartname: traefik/traefik
-          version: v26.0.0
-          namespace: default
-          values: |
-            service:
-              annotations:
-                load-balancer.hetzner.cloud/network-zone: eu-central
-                load-balancer.hetzner.cloud/name: marmite-load-balancer

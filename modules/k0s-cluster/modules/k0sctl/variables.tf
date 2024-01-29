@@ -10,7 +10,7 @@ variable "external_hostname" {
 
 variable "k0s_version" {
   type = string
-  default = "v1.28.4+k0s.0"
+  default = "v1.28.5+k0s.0"
 }
 
 variable "cluster_cidr" {

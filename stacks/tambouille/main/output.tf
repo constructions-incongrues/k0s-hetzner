@@ -1,4 +1,3 @@
-output "kubeconfig" {
-  value = module.marmite.kubeconfig
-  sensitive = true
+output "kubeconfig_filename" {
+  value = module.marmite.kubeconfig_filename
 }
