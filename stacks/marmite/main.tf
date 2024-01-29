@@ -99,9 +99,10 @@ module "nginx-controller" {
 # Cert Manager
 module "cert-manager" {
   source  = "git::https://github.com/terraform-iaac/terraform-kubernetes-cert-manager?ref=33a94488f30f1f41cdac49ca89647279fac5edc2" # 2.6.2
-  cluster_issuer_email = var.certmanager_email
-
   depends_on = [ helm_release.hcloud-ccm, helm_release.hcloud-csi ]
+  
+  cluster_issuer_email = var.certmanager_email
+  cluster_issuer_create = false
 }
 
 # External DNS
