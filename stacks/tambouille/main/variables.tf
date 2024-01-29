@@ -1,7 +1,6 @@
 variable "hcloud_api_token" {
   description = "Hetzner API token"
   type        = string
-  default     = ""
 }
 
 variable "cloudflare_email" {
