@@ -28,5 +28,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-/stacks/tambouille/main/bin/
-/var
+/stacks/*/bin
+/stacks/*/var

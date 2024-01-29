@@ -1,6 +1,6 @@
 # k0s Cluster
 module "marmite" {
-  source = "../../../modules/k0s-cluster"
+  source = "../../modules/k0s-cluster"
 
   cluster_name      = "marmite"
   hcloud_api_token  = var.hcloud_api_token
@@ -139,13 +139,4 @@ resource "helm_release" "prometheus-stack" {
   create_namespace = true
 
   depends_on = [ helm_release.hcloud-ccm, helm_release.hcloud-csi ]
-}
-
-# Homer
-module "homer" {
-  source = "../../../modules/homer"
-
-  namespace = "tambouille-system"
-  config = file("files/homer.yaml")
-  host = "www.constructions-incongrues.net"
 }
