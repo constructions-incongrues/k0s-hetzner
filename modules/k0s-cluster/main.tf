@@ -31,7 +31,7 @@ module "node_pools" {
   name_prefix     = var.cluster_name
   subnet          = module.network.subnets["infrastructure"]
 
-  ssh_key_name    = module.ssh_keys.name
+  ssh_key_name    = hcloud_ssh_key.this.name
 }
 
 module "load_balancer" {
