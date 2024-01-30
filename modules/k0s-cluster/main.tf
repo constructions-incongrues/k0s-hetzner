@@ -51,10 +51,3 @@ module "k0sctl" {
   ssh_key_path        = module.ssh_keys.path
   load_balancer_ipv4_address       = module.load_balancer.ipv4_address
 }
-
-# Kubeconfig
-resource "local_sensitive_file" "kubeconfig" {
-  content = module.k0sctl.kubeconfig
-  filename = "${path.cwd}/var/kube/${var.cluster_name}"
-  file_permission = 0600
-}

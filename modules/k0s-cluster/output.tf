@@ -1,5 +1,5 @@
 output "kubeconfig" {
-  value = local_sensitive_file.kubeconfig.content
+  value = module.k0sctl.kubeconfig
   sensitive = true
 }
 
