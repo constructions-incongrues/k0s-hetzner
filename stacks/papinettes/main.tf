@@ -24,8 +24,6 @@ resource "helm_release" "hcloud-ccm" {
     name = "networking.enabled"
     value = true
   }
-
-  depends_on = [ module.marmite ]
 }
 
 # Hetzner Cloud Common Storage Interface
@@ -47,14 +45,24 @@ resource "helm_release" "hcloud-csi" {
     name = "node.hostNetwork"
     value = true
   }
+}
 
-  depends_on = [ module.marmite ]
+data "terraform_remote_state" "marmite" {
+  backend = "remote"
+
+  config = {
+    organization = "constructions-incongrues"
+    workspaces = {
+      name = "marmite-main"
+    }
+  }
 }
 
 # Ingress Controller
 module "nginx-controller" {
   source  = "git::https://github.com/terraform-iaac/terraform-helm-nginx-controller?ref=40d483dd4396ea3c2f7a9cc7d8428f35b1ba7930" # 2.3.0
-  ip_address = module.marmite.load_balancer_ipv4_address
+  ip_address = data.terraform_remote_state.marmite.outputs.load_balancer_ipv4_address
+
   additional_set = [{
     name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/name"
     value = "marmite-load-balancer"
