@@ -62,4 +62,6 @@ module "k0sctl" {
   worker_nodes        = module.node_pools["workers"].nodes
   ssh_key_path        = "${path.module}/var/private_key"
   load_balancer_ipv4_address       = module.load_balancer.ipv4_address
+
+  depends_on = [ module.network ]
 }
