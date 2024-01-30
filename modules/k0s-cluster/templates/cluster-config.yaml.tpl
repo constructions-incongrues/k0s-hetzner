@@ -5,7 +5,7 @@ metadata:
 spec:
   api:
     address: ${controller_nodes[0].ipv4_address}
-    port: 6443
+    port: 443
     k0sApiPort: 9443
     externalAddress: ${controller_nodes[0].ipv4_address}
     sans:
