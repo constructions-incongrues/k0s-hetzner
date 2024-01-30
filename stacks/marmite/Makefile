@@ -10,15 +10,10 @@ init:
 
 apply: init
 	rm -f ~/.ssh/known_hosts
-	terraform apply -auto-approve -var-file="$$USER.tfvars" -target module.marmite
-	terraform apply -auto-approve -var-file="$$USER.tfvars"
+	terraform apply -auto-approve
 
 plan: init
-	terraform plan -var-file="$$USER.tfvars"
+	terraform plan
 
 destroy: init
-	terraform destroy -auto-approve -var-file="$$USER.tfvars" -target module.marmite
-	terraform destroy -auto-approve -var-file="$$USER.tfvars"
-
-proxy:
-	kubectl --kubeconfig ./var/kube/marmite proxy
+	terraform destroy -auto-approve

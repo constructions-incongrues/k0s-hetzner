@@ -11,5 +11,5 @@ module "ssh-keypair-generator" {
 
 resource "hcloud_ssh_key" "this" {
   name = "${var.name_prefix}-cluster"
-  public_key = module.ssh-keypair-generator.public_key.content
+  public_key = module.ssh-keypair-generator.public_key
 }

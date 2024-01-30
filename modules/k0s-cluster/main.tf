@@ -38,6 +38,11 @@ module "load_balancer" {
   source = "./modules/load_balancer"
 }
 
+resource "local_sensitive_file" "ssh_private_key" {
+  content = module.ssh_keys.private_key
+  filename = "${path.module}/var/private_key"
+}
+
 # Cluster installation and configuration
 module "k0sctl" {
   source = "./modules/k0sctl"
@@ -48,6 +53,6 @@ module "k0sctl" {
   network_cidr_blocks = module.network.network_cidr_blocks
   controller_nodes    = module.node_pools["controllers"].nodes
   worker_nodes        = module.node_pools["workers"].nodes
-  ssh_key_path        = module.ssh_keys.path
+  ssh_key_path        = "${path.module}/var/private_key"
   load_balancer_ipv4_address       = module.load_balancer.ipv4_address
 }
