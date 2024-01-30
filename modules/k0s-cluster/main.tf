@@ -41,6 +41,8 @@ module "load_balancer" {
 resource "local_sensitive_file" "ssh_private_key" {
   content = module.ssh_keys.private_key
   filename = "${path.module}/var/private_key"
+  directory_permission = 700
+  file_permission = 600
 }
 
 resource "hcloud_ssh_key" "this" {
