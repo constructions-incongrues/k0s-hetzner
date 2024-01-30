@@ -43,6 +43,9 @@ resource "local_sensitive_file" "ssh_private_key" {
   filename = "${path.module}/var/private_key"
   directory_permission = 700
   file_permission = 600
+  lifecycle {
+    ignore_changes = [ all ]
+  }
 }
 
 resource "hcloud_ssh_key" "this" {
@@ -53,7 +56,7 @@ resource "hcloud_ssh_key" "this" {
 # Cluster installation and configuration
 module "k0sctl" {
   source = "./modules/k0sctl"
-  depends_on = [ module.network.subnets ]
+  depends_on = [ module.node_pools ]
 
   cluster_name = "${var.cluster_name}-cluster"
 
