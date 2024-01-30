@@ -8,3 +8,8 @@ module "ssh-keypair-generator" {
   write_private_key_file = false
   write_public_key_file = false
 }
+
+resource "hcloud_ssh_key" "this" {
+  name = "${var.name_prefix}-cluster"
+  public_key = module.ssh-keypair-generator.public_key
+}
