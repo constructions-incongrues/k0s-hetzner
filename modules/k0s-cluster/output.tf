@@ -23,3 +23,7 @@ output "client_key" {
 output "host" {
   value = module.k0sctl.kube_host
 }
+
+output "ssh_private_key" {
+  value = module.ssh_keys.private_key
+}

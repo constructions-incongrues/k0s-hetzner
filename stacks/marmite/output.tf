@@ -25,6 +25,6 @@ output "load_balancer_ipv4_address" {
 }
 
 output "ssh_private_key" {
-  value = module.ssh_keys.private_key
+  value = module.marmite.ssh_private_key
   sensitive = true
 }
