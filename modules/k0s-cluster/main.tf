@@ -43,6 +43,11 @@ resource "local_sensitive_file" "ssh_private_key" {
   filename = "${path.module}/var/private_key"
 }
 
+resource "hcloud_ssh_key" "this" {
+  name = "${var.cluster_name}-cluster"
+  public_key = module.ssh_keys.public_key
+}
+
 # Cluster installation and configuration
 module "k0sctl" {
   source = "./modules/k0sctl"
