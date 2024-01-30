@@ -49,6 +49,7 @@ module "k0sctl" {
   controller_nodes    = module.node_pools["controllers"].nodes
   worker_nodes        = module.node_pools["workers"].nodes
   ssh_key_path        = module.ssh_keys.path
+  load_balancer_ipv4_address       = module.load_balancer.ipv4_address
 }
 
 # Kubeconfig

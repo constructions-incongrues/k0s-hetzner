@@ -38,6 +38,7 @@ resource "k0sctl_config" "cluster" {
       version = var.k0s_version
       config = templatefile("${path.module}/../../templates/cluster-config.yaml.tpl", {
         controller_nodes = var.controller_nodes
+        load_balancer_ipv4_address = var.load_balancer_ipv4_address
       })
     }
   }

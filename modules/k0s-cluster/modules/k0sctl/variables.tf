@@ -44,3 +44,7 @@ variable "controller_nodes" {
 variable "ssh_key_path" {
   type = string
 }
+
+variable "load_balancer_ipv4_address" {
+  type = any
+}
