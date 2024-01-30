@@ -53,6 +53,7 @@ resource "hcloud_ssh_key" "this" {
 # Cluster installation and configuration
 module "k0sctl" {
   source = "./modules/k0sctl"
+  depends_on = [ module.network.subnets ]
 
   cluster_name = "${var.cluster_name}-cluster"
 
@@ -62,6 +63,4 @@ module "k0sctl" {
   worker_nodes        = module.node_pools["workers"].nodes
   ssh_key_path        = "${path.module}/var/private_key"
   load_balancer_ipv4_address       = module.load_balancer.ipv4_address
-
-  depends_on = [ module.network ]
 }
