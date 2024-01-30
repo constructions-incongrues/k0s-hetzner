@@ -10,3 +10,11 @@ variable "cloudflare_email" {
 variable "cloudflare_api_key" {
   type = string
 }
+
+variable "github_token" {
+  type = string
+}
+
+variable "certmanager_email" {
+  type = string
+}
