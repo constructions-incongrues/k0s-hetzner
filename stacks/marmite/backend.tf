@@ -4,7 +4,7 @@ terraform {
     organization = "constructions-incongrues"
 
     workspaces {
-      prefix = "marmite-"
+      name = "marmite"
     }
   }
 }
