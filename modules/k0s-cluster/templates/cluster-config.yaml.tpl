@@ -10,7 +10,6 @@ spec:
     externalAddress: ${controller_nodes[0].ipv4_address}
     sans:
       - ${controller_nodes[0].ipv4_address}
-      - ${load_balancer_ipv4_address}
   storage:
     type: etcd
     etcd:

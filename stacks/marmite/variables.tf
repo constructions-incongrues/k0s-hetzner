@@ -18,3 +18,23 @@ variable "github_token" {
 variable "certmanager_email" {
   type = string
 }
+
+variable "controllers_server_type" {
+  type = string
+  default = "cpx11"
+}
+
+variable "controllers_count" {
+  type = number
+  default = 1
+}
+
+variable "workers_server_type" {
+  type = string
+  default = "cpx11"
+}
+
+variable "workers_count" {
+  type = number
+  default = 1
+}
