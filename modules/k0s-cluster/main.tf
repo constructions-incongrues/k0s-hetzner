@@ -61,6 +61,6 @@ module "k0sctl" {
   network_cidr_blocks = module.network.network_cidr_blocks
   controller_nodes    = module.node_pools["controllers"].nodes
   worker_nodes        = module.node_pools["workers"].nodes
-  ssh_key_path        = local_sensitive_file.ssh_private_key.filename
+  ssh_key_path        = "~/.ssh/marmite-cluster"
   load_balancer_ipv4_address       = module.load_balancer.ipv4_address
 }
