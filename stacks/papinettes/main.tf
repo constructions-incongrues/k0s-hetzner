@@ -6,7 +6,7 @@ resource "kubernetes_secret" "hcloud" {
   }
 
   data = {
-    network = "marmite-network"
+    network = "k3s-network"
     token = var.hcloud_api_token
   }
 }
@@ -37,10 +37,10 @@ resource "helm_release" "hcloud-csi" {
   wait = true
   wait_for_jobs = true
 
-  set {
-    name = "node.kubeletDir"
-    value = "/var/lib/k0s/kubelet"
-  }
+  # set {
+  #   name = "node.kubeletDir"
+  #   value = "/var/lib/k0s/kubelet"
+  # }
   set {
     name = "node.hostNetwork"
     value = true
@@ -53,29 +53,29 @@ data "terraform_remote_state" "marmite" {
   config = {
     organization = "constructions-incongrues"
     workspaces = {
-      name = "marmite-main"
+      name = "marmite"
     }
   }
 }
 
-# Ingress Controller
-module "nginx-controller" {
-  source  = "git::https://github.com/terraform-iaac/terraform-helm-nginx-controller?ref=40d483dd4396ea3c2f7a9cc7d8428f35b1ba7930" # 2.3.0
-  ip_address = data.terraform_remote_state.marmite.outputs.load_balancer_ipv4_address
+# # Ingress Controller
+# module "nginx-controller" {
+#   source  = "git::https://github.com/terraform-iaac/terraform-helm-nginx-controller?ref=40d483dd4396ea3c2f7a9cc7d8428f35b1ba7930" # 2.3.0
+#   ip_address = data.terraform_remote_state.marmite.outputs.load_balancer_ipv4_address
 
-  additional_set = [{
-    name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/name"
-    value = "marmite-load-balancer"
-  }, {
-    name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/disable-private-ingress"
-    value : true
-  }, {
-    name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/ipv6-disabled"
-    value : true
-  }]
+#   additional_set = [{
+#     name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/name"
+#     value = "k3s-load-balancer"
+#   }, {
+#     name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/disable-private-ingress"
+#     value : true
+#   }, {
+#     name = "controller.service.annotations.load-balancer\\.hetzner\\.cloud/ipv6-disabled"
+#     value : true
+#   }]
 
-  depends_on = [ helm_release.hcloud-ccm, helm_release.hcloud-csi ]
-}
+#   depends_on = [ helm_release.hcloud-ccm, helm_release.hcloud-csi ]
+# }
 
 # Cert Manager
 module "cert-manager" {
@@ -129,5 +129,19 @@ module "homer" {
 
   namespace = "tambouille-system"
   config = file("files/homer.yaml")
-  host = "www.constructions-incongrues.net"
+  host = "hello.constructions-incongrues.net"
+}
+
+resource "kubernetes_manifest" "helmchartconfig-traefik" {
+  manifest = {
+    apiVersion = "helm.cattle.io/v1" 
+    kind = "HelmChartConfig"
+    metadata = {
+      name = "traefik"
+      namespace = "kube-system"
+    }
+    spec = {
+      valuesContent = file("./files/traefik.yaml")
+    }
+  }
 }

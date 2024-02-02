@@ -62,14 +62,13 @@ resource "tfe_workspace" "marmite" {
   project_id = tfe_project.tambouille.id
   organization = data.tfe_organization.constructions-incongrues.name
 
-  vcs_repo {
-    branch             = "main"
-    identifier         = "constructions-incongrues/tambouille"
-    github_app_installation_id = data.tfe_github_app_installation.constructions-incongrues.id
-  }
+  # vcs_repo {
+  #   branch             = "main"
+  #   identifier         = "constructions-incongrues/tambouille"
+  #   github_app_installation_id = data.tfe_github_app_installation.constructions-incongrues.id
+  # }
 
   working_directory = "stacks/marmite"
-
 }
 
 resource "tfe_workspace" "papinettes" {
@@ -77,11 +76,11 @@ resource "tfe_workspace" "papinettes" {
   project_id = tfe_project.tambouille.id
   organization = data.tfe_organization.constructions-incongrues.name
 
-  vcs_repo {
-    branch             = "main"
-    identifier         = "constructions-incongrues/tambouille"
-    github_app_installation_id = data.tfe_github_app_installation.constructions-incongrues.id
-  }
+  # vcs_repo {
+  #   branch             = "main"
+  #   identifier         = "constructions-incongrues/tambouille"
+  #   github_app_installation_id = data.tfe_github_app_installation.constructions-incongrues.id
+  # }
 
   working_directory = "stacks/papinettes"
 }

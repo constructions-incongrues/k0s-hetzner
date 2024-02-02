@@ -1,26 +1,75 @@
-# k0s Cluster
-module "marmite" {
-  source = "../../modules/k0s-cluster"
+data "hcloud_image" "ubuntu" {
+  name = "ubuntu-22.04"
+}
 
-  cluster_name      = "marmite"
-  hcloud_api_token  = var.hcloud_api_token
+resource "tls_private_key" "ed25519_provisioning" {
+  algorithm = "ED25519"
+}
 
-  node_pools = {
-    "controllers" = {
-      server_type     = var.controllers_server_type
-      image           = "ubuntu-22.04"
-      prefix          = "controller-0"
-      num_nodes       = var.controllers_count
-      role            = "controller"
-      cidrhost_prefix = 3
-    },
-    "workers" = {
-      server_type     = var.workers_server_type
-      image           = "ubuntu-22.04"
-      prefix          = "worker-0"
-      num_nodes       = var.workers_count
-      role            = "worker"
-      cidrhost_prefix = 5
-    },
+resource "hcloud_ssh_key" "default" {
+  name       = "K3S terraform module - Provisionning SSH key"
+  public_key = trimspace(tls_private_key.ed25519_provisioning.public_key_openssh)
+}
+
+resource "hcloud_network" "k3s" {
+  name     = "k3s-network"
+  ip_range = "10.0.0.0/8"
+}
+
+resource "hcloud_network_subnet" "k3s_nodes" {
+  type         = "server"
+  network_id   = hcloud_network.k3s.id
+  network_zone = "eu-central"
+  ip_range     = "10.254.1.0/24"
+}
+
+resource "hcloud_server_network" "control_planes" {
+  count     = var.servers_num
+  subnet_id = hcloud_network_subnet.k3s_nodes.id
+  server_id = hcloud_server.control_planes[count.index].id
+  ip        = cidrhost(hcloud_network_subnet.k3s_nodes.ip_range, 1 + count.index)
+}
+
+resource "hcloud_server_network" "agents_network" {
+  count     = length(hcloud_server.agents)
+  server_id = hcloud_server.agents[count.index].id
+  subnet_id = hcloud_network_subnet.k3s_nodes.id
+  ip        = cidrhost(hcloud_network_subnet.k3s_nodes.ip_range, 1 + var.servers_num + count.index)
+}
+
+resource "hcloud_server" "control_planes" {
+  count = var.servers_num
+  name  = "k3s-control-plane-${count.index}"
+
+  image       = data.hcloud_image.ubuntu.name
+  server_type = "cx11"
+
+  ssh_keys = [hcloud_ssh_key.default.id, "vscode@codespaces-e6d4d6"]
+  labels = {
+    provisioner = "terraform",
+    engine      = "k3s",
+    node_type   = "control-plane"
   }
+}
+
+resource "hcloud_server" "agents" {
+  count = var.agents_num
+  name  = "k3s-agent-${count.index}"
+
+  image       = data.hcloud_image.ubuntu.name
+  server_type = "cx11"
+
+  ssh_keys = [hcloud_ssh_key.default.id, "vscode@codespaces-e6d4d6"]
+  labels = {
+    provisioner = "terraform",
+    engine      = "k3s",
+    node_type   = "agent",
+    nodepool    = "general"
+  }
+}
+
+resource "hcloud_load_balancer" "load_balancer" {
+  name               = "k3s-load-balancer"
+  load_balancer_type = "lb11"
+  location           = "nbg1"
 }
