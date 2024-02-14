@@ -1,5 +1,0 @@
-service:
-  annotations:
-    load-balancer.hetzner.cloud/name: "k3s-load-balancer"
-    load-balancer.hetzner.cloud/disable-private-ingress: "true"
-    load-balancer.hetzner.cloud/ipv6-disabled: "true"

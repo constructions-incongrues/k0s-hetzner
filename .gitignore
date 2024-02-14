@@ -1,5 +1,5 @@
 # Local .terraform directories
-**/.terraform/*
+/stacks/*/.terraform
 
 # Terraform lockfile
 .terraform.lock.hcl
@@ -29,4 +29,6 @@ override.tf.json
 terraform.rc
 
 /stacks/*/bin
-/stacks/*/var
+/var
+
+/SCRATCHPAD*

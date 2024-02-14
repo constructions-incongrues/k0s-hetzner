@@ -3,7 +3,7 @@ terraform {
     organization = "constructions-incongrues"
 
     workspaces {
-      name = "papinettes"
+      name = "tambouille"
     }
   }
 }

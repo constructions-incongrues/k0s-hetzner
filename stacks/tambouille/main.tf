@@ -1,14 +1,9 @@
-data "tfe_organization" "constructions-incongrues" {
-  name = "constructions-incongrues"
-}
-
-data "tfe_github_app_installation" "constructions-incongrues" {
-  name = "constructions-incongrues"
-}
-
 resource "tfe_variable_set" "main" {
   name = "main"
-  organization = data.tfe_github_app_installation.constructions-incongrues.name
+  
+  workspace_ids = [
+    tfe_workspace.marmite.id,
+  ]
 }
 
 resource "tfe_project_variable_set" "tambouille-main" {
@@ -28,14 +23,7 @@ resource "tfe_variable" "cloudflare_email" {
   key = "cloudflare_email"
   sensitive = true
   variable_set_id = tfe_variable_set.main.id
-}
-
-resource "tfe_variable" "certmanager_email" {
-  category = "terraform"
-  key = "certmanager_email"
-  sensitive = false
-  variable_set_id = tfe_variable_set.main.id
-  value = "contact@pastis-hosting.net"
+  value = var.cloudflare_email
 }
 
 resource "tfe_variable" "hcloud_api_token" {
@@ -43,24 +31,24 @@ resource "tfe_variable" "hcloud_api_token" {
   key = "hcloud_api_token"
   sensitive = true
   variable_set_id = tfe_variable_set.main.id
+  value = var.hcloud_api_token
 }
 
-resource "tfe_variable" "github_token" {
+resource "tfe_variable" "cloudflare_r2_account_id" {
   category = "terraform"
-  key = "github_token"
+  key = "cloudflare_r2_account_id"
   sensitive = true
   variable_set_id = tfe_variable_set.main.id
+  value = var.cloudflare_r2_account_id
 }
 
 resource "tfe_project" "tambouille" {
   name = "tambouille"
-  organization = data.tfe_organization.constructions-incongrues.name
 }
 
 resource "tfe_workspace" "marmite" {
   name = "marmite"
   project_id = tfe_project.tambouille.id
-  organization = data.tfe_organization.constructions-incongrues.name
 
   # vcs_repo {
   #   branch             = "main"
@@ -71,16 +59,6 @@ resource "tfe_workspace" "marmite" {
   working_directory = "stacks/marmite"
 }
 
-resource "tfe_workspace" "papinettes" {
-  name = "papinettes"
-  project_id = tfe_project.tambouille.id
-  organization = data.tfe_organization.constructions-incongrues.name
-
-  # vcs_repo {
-  #   branch             = "main"
-  #   identifier         = "constructions-incongrues/tambouille"
-  #   github_app_installation_id = data.tfe_github_app_installation.constructions-incongrues.id
-  # }
-
-  working_directory = "stacks/papinettes"
-}
+# data "tfe_github_app_installation" "constructions-incongrues" {
+#   name = "constructions-incongrues"
+# }
