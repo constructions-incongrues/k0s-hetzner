@@ -55,34 +55,34 @@ module "kube-hetzner" {
   control_plane_nodepools = [
     {
       name        = "server",
-      server_type = "cpx21",
-      location    = "fsn1",
+      server_type = var.nodepool_servers.type,
+      location    = var.nodepool_servers.location,
       labels      = [],
       taints      = [],
-      count       = 1
+      count       = var.nodepool_servers.count
     }
   ]
 
   agent_nodepools = [
     {
-      name        = "agent",
-      server_type = "cpx31",
-      location    = "fsn1",
+      name        = "worker",
+      server_type = var.nodepool_agents_workers.type,
+      location    = var.nodepool_agents_workers.location,
       labels      = [],
       taints      = [],
-      count       = 1
+      count       = var.nodepool_agents_workers.count
     },
     {
       name        = "storage",
-      server_type = "cax11",
-      location    = "fsn1",
+      server_type = var.nodepool_agents_storage.type,
+      location    = var.nodepool_agents_storage.location,
       labels      = [
         "node.kubernetes.io/server-usage=storage"
       ],
       labels = []
       taints = []
-      count       = 0
-      longhorn_volume_size = 50
+      count       = var.nodepool_agents_storage.count,
+      longhorn_volume_size = var.nodepool_agents_storage.longhorn_volume_size
     }
   ]
 

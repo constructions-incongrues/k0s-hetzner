@@ -45,3 +45,47 @@ variable "objectstorage_bucket" {
   nullable = false
   default = "tambouille"
 }
+
+variable "nodepool_servers" {
+  type = object({
+    count = number
+    location = string
+    type = string
+  })
+
+  default = {
+    count = 3
+    location = "fsn1"
+    type = "cx11"
+  }
+}
+
+variable "nodepool_agents_workers" {
+  type = object({
+    count = number
+    location = string
+    type = string
+  })
+
+  default = {
+    count = 3
+    location = "fsn1"
+    type = "cx11"
+  }
+}
+
+variable "nodepool_agents_storage" {
+  type = object({
+    count = number
+    location = string
+    type = string
+    longhorn_volume_size = number
+  })
+
+  default = {
+    count = 3
+    location = "fsn1"
+    type = "cx11"
+    longhorn_volume_size = 50
+  }
+}
