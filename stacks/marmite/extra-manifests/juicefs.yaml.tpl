@@ -44,6 +44,7 @@ spec:
   version: 0.19.6
   valuesContent: |- 
     # For production environment, manually create & manage storageClass outside Helm is recommended, ref: https://juicefs.com/docs/csi/guide/pv#create-storage-class
+    mountMode: sidecar
     storageClasses:
     - name: "juicefs-kdrive"
       enabled: true
