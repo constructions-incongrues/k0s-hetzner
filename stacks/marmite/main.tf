@@ -46,11 +46,11 @@ module "kube-hetzner" {
   firewall_kube_api_source = ["0.0.0.0/0"]
   
   # The default is "true" (in HA setup i.e. at least 3 control plane nodes & 2 agents, just keep it enabled since it works flawlessly).
-  automatically_upgrade_k3s = false
+  automatically_upgrade_k3s = (var.nodepool_servers.count >= 3 && var.nodepool_agents_workers.count + var.nodepool_agents_storage.count >=2)
 
   # The default is "true" (in HA setup it works wonderfully well, with automatic roll-back to the previous snapshot in case of an issue).
   # IMPORTANT! For non-HA clusters i.e. when the number of control-plane nodes is < 3, you have to turn it off.
-  automatically_upgrade_os = false
+  automatically_upgrade_os = (var.nodepool_servers.count >= 3)
 
   control_plane_nodepools = [
     {
