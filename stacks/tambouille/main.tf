@@ -74,6 +74,32 @@ resource "tfe_variable" "objectstorage_bucket" {
   value = var.objectstorage_bucket
 }
 
+resource "tfe_variable" "juicefs_kdrive_accesskey" {
+  category = "terraform"
+  key = "juicefs_kdrive_accesskey"
+  sensitive = true
+  variable_set_id = tfe_variable_set.main.id
+  value = var.juicefs_kdrive_accesskey
+}
+
+resource "tfe_variable" "juicefs_kdrive_secretkey" {
+  category = "terraform"
+  key = "juicefs_kdrive_secretkey"
+  sensitive = true
+  variable_set_id = tfe_variable_set.main.id
+  value = var.juicefs_kdrive_secretkey
+}
+
+resource "tfe_variable" "juicefs_kdrive_bucket" {
+  category = "terraform"
+  key = "juicefs_kdrive_bucket"
+  sensitive = true
+  variable_set_id = tfe_variable_set.main.id
+  value = var.juicefs_kdrive_bucket
+}
+
+
+
 resource "tfe_project" "tambouille" {
   name = "tambouille"
 }

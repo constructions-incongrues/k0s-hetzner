@@ -36,6 +36,9 @@ module "kube-hetzner" {
     objectstorage_access_key_secret = var.objectstorage_access_key_secret
     objectstorage_endpoint = var.objectstorage_endpoint
     objectstorage_bucket = var.objectstorage_bucket
+    juicefs_kdrive_accesskey = var.juicefs_kdrive_accesskey
+    juicefs_kdrive_bucket = var.juicefs_kdrive_bucket
+    juicefs_kdrive_secretkey = var.juicefs_kdrive_secretkey
   }
 
   ssh_public_key = tls_private_key.ed25519_provisioning.public_key_openssh
