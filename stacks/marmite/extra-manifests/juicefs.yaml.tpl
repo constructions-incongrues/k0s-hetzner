@@ -31,7 +31,6 @@ spec:
     persistence:
       enabled: true
       storageClass: "longhorn"
- 
 ---
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
