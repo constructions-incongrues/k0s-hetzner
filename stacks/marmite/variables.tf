@@ -89,3 +89,16 @@ variable "nodepool_agents_storage" {
     longhorn_volume_size = 50
   }
 }
+
+variable "juicefs_kdrive_bucket" {
+  sensitive = true
+  nullable = false
+}
+variable "juicefs_kdrive_accesskey" {
+  sensitive = true
+  nullable = false
+}
+variable "juicefs_kdrive_secretkey" {
+  sensitive = true
+  nullable = false
+}

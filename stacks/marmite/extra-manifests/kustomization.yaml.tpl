@@ -8,4 +8,5 @@ resources:
   - snapshot-controller.yaml
   - longhorn.yaml
   - velero.yaml
+  - juicefs.yaml
 
