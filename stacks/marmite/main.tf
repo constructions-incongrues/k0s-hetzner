@@ -9,8 +9,7 @@ resource "cloudflare_r2_bucket" "tambouille" {
 }
 
 module "kube-hetzner" {
-  source = "kube-hetzner/kube-hetzner/hcloud"
-  version = "2.11.8"
+  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=f7ea702039d76405642a6422e9318724ce1b74c3"
 
   providers = {
     hcloud = hcloud
@@ -27,11 +26,7 @@ module "kube-hetzner" {
   ingress_controller = "traefik"
   traefik_redirect_to_https = false
   load_balancer_disable_ipv6 = true
-  
-  additional_k3s_environment = {
-    INSTALL_K3S_SKIP_SELINUX_RPM = true
-  }
-  control_planes_custom_config = {
+  agent_nodes_custom_config = {
     selinux = false
   }
 
