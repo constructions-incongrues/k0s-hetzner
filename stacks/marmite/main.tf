@@ -9,7 +9,7 @@ resource "cloudflare_r2_bucket" "tambouille" {
 }
 
 module "kube-hetzner" {
-  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=c4a14928d2a7cef59ddc4f86cf66ae985cc3a40e"
+  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=2284148e5be5e5d03488a51170110af7886745e7"
 
   providers = {
     hcloud = hcloud
