@@ -27,6 +27,13 @@ module "kube-hetzner" {
   ingress_controller = "traefik"
   traefik_redirect_to_https = false
   load_balancer_disable_ipv6 = true
+  
+  additional_k3s_environment = {
+    INSTALL_K3S_SKIP_SELINUX_RPM = true
+  }
+  control_planes_custom_config = {
+    selinux = false
+  }
 
   extra_kustomize_parameters = {
     cloudflare_api_key = var.cloudflare_api_key
@@ -270,4 +277,3 @@ controller:
         memory: 20Mi
   EOT */
 }
-
