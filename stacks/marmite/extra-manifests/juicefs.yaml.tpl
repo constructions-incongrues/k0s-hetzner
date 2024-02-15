@@ -1,14 +1,3 @@
-# ---
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#    name: longhorn-backup-target
-#    namespace: longhorn-system
-# type: Opaque
-# stringData:
-#   AWS_ACCESS_KEY_ID: ${objectstorage_access_key_id}
-#   AWS_SECRET_ACCESS_KEY: ${objectstorage_access_key_secret}
-#   AWS_ENDPOINTS: ${objectstorage_endpoint}
 ---
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
@@ -44,7 +33,7 @@ spec:
   version: 0.19.6
   valuesContent: |- 
     # For production environment, manually create & manage storageClass outside Helm is recommended, ref: https://juicefs.com/docs/csi/guide/pv#create-storage-class
-    mountMode: sidecar
+    mountMode: mountPod
     storageClasses:
     - name: "juicefs-kdrive"
       enabled: true
