@@ -32,6 +32,19 @@ spec:
   repo: https://juicedata.github.io/charts/
   version: 0.19.6
   valuesContent: |- 
+    sidecars:
+      livenessProbeImage:
+        repository: registry.k8s.io/sig-storage/livenessprobe
+        tag: "v2.11.0"
+      nodeDriverRegistrarImage:
+        repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
+        tag: "v2.9.0"
+      csiProvisionerImage:
+        repository: registry.k8s.io/sig-storage/csi-provisioner
+        tag: "v3.6.0"
+      csiResizerImage:
+        repository: registry.k8s.io/sig-storage/csi-resizer
+        tag: "v1.9.0"
     mountMode: mountpod
     storageClasses:
     - name: "juicefs-kdrive"
