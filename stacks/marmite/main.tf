@@ -9,7 +9,7 @@ resource "cloudflare_r2_bucket" "tambouille" {
 }
 
 module "kube-hetzner" {
-  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=f7ea702039d76405642a6422e9318724ce1b74c3"
+  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=c4a14928d2a7cef59ddc4f86cf66ae985cc3a40e"
 
   providers = {
     hcloud = hcloud
@@ -26,13 +26,6 @@ module "kube-hetzner" {
   ingress_controller = "traefik"
   traefik_redirect_to_https = false
   load_balancer_disable_ipv6 = true
-  
-  control_planes_custom_config = {
-    selinux = false
-  }
-  agent_nodes_custom_config = {
-    selinux = false
-  }
 
   extra_kustomize_parameters = {
     cloudflare_api_key = var.cloudflare_api_key
@@ -69,6 +62,7 @@ module "kube-hetzner" {
       labels      = [],
       taints      = [],
       count       = var.nodepool_servers.count
+      selinux     = false
     }
   ]
 
@@ -80,6 +74,7 @@ module "kube-hetzner" {
       labels      = [],
       taints      = [],
       count       = var.nodepool_agents_workers.count
+      selinux     = false
     },
     {
       name        = "storage",
@@ -88,10 +83,11 @@ module "kube-hetzner" {
       labels      = [
         "node.kubernetes.io/server-usage=storage"
       ],
-      labels = []
-      taints = []
-      count       = var.nodepool_agents_storage.count,
+      labels               = []
+      taints               = []
+      count                = var.nodepool_agents_storage.count,
       longhorn_volume_size = var.nodepool_agents_storage.longhorn_volume_size
+      selinux              = false
     }
   ]
 
