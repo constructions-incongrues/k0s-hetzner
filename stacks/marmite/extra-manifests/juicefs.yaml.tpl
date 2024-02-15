@@ -32,6 +32,8 @@ spec:
   repo: https://juicedata.github.io/charts/
   version: 0.19.6
   valuesContent: |- 
+    defaultMountImage:
+      ce: "juicedata/mount:ce-v1.1.2"
     sidecars:
       livenessProbeImage:
         repository: registry.k8s.io/sig-storage/livenessprobe
