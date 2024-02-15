@@ -102,3 +102,8 @@ variable "juicefs_kdrive_secretkey" {
   sensitive = true
   nullable = false
 }
+
+variable "disable_selinux" {
+  type = bool
+  default = false
+}

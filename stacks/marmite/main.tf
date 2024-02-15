@@ -9,7 +9,7 @@ resource "cloudflare_r2_bucket" "tambouille" {
 }
 
 module "kube-hetzner" {
-  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=874907132f36fd0a06f67743de4c04694027b80a"
+  source = "git::github.com/trivoallan/terraform-hcloud-kube-hetzner?ref=0598a3735cbdc2100ab7798af601569fea39533e"
 
   providers = {
     hcloud = hcloud
@@ -22,6 +22,7 @@ module "kube-hetzner" {
   enable_klipper_metal_lb = false
   allow_scheduling_on_control_plane = false
   disable_hetzner_csi = false
+  disable_selinux = var.disable_selinux
   enable_rancher = false
   ingress_controller = "traefik"
   traefik_redirect_to_https = false
@@ -62,7 +63,7 @@ module "kube-hetzner" {
       labels      = [],
       taints      = [],
       count       = var.nodepool_servers.count
-      selinux     = false
+      selinux     = !var.disable_selinux
     }
   ]
 
@@ -74,7 +75,7 @@ module "kube-hetzner" {
       labels      = [],
       taints      = [],
       count       = var.nodepool_agents_workers.count
-      selinux     = false
+      selinux     = !var.disable_selinux
     },
     {
       name        = "storage",
@@ -87,7 +88,7 @@ module "kube-hetzner" {
       taints               = []
       count                = var.nodepool_agents_storage.count,
       longhorn_volume_size = var.nodepool_agents_storage.longhorn_volume_size
-      selinux              = false
+      selinux              = !var.disable_selinux
     }
   ]
 
