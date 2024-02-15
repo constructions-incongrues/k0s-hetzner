@@ -22,7 +22,7 @@ module "kube-hetzner" {
   enable_klipper_metal_lb = false
   allow_scheduling_on_control_plane = false
   disable_hetzner_csi = false
-  disable_selinux = var.disable_selinux
+  disable_selinux = true
   enable_rancher = false
   ingress_controller = "traefik"
   traefik_redirect_to_https = false
