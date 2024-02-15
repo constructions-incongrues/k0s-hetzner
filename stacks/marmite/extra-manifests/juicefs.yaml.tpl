@@ -32,7 +32,7 @@ spec:
   repo: https://juicedata.github.io/charts/
   version: 0.19.6
   valuesContent: |- 
-    mountMode: sidecar
+    mountMode: mountpod
     storageClasses:
     - name: "juicefs-kdrive"
       enabled: true
