@@ -24,28 +24,6 @@ spec:
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: juicefs-etcd
-  namespace: kube-system
-spec:
-  chart: etcd
-  targetNamespace: kube-system
-  repo: https://charts.bitnami.com/bitnami
-  version: 9.11.0
-  valuesContent: |-
-    auth:
-      rbac:
-        create: false
-        allowNoneAuthentication: true
-        rootPassword: "root"
-      token:
-        enabled: false
-    persistence:
-      enabled: true
-      storageClass: "longhorn"
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
   name: juicefs-csi-driver
   namespace: kube-system
 spec:
