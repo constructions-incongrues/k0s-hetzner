@@ -26,6 +26,10 @@ module "kube-hetzner" {
   ingress_controller = "traefik"
   traefik_redirect_to_https = false
   load_balancer_disable_ipv6 = true
+  
+  control_planes_custom_config = {
+    selinux = false
+  }
   agent_nodes_custom_config = {
     selinux = false
   }
